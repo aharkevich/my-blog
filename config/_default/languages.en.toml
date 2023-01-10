@@ -7,7 +7,7 @@ rtl = false
 
 title = "Home"
 # logo = "img/logo.png"
-description = "My awesome website"
+description = "My personal website"
 # copyright = "Copy, _right?_ :thinking_face:"
 
 dateFormat = "2 January 2006"
@@ -15,8 +15,8 @@ dateFormat = "2 January 2006"
 [author]
   name = "Aliaksandr Kharkevich"
   image = "img/me.png"
-  headline = "I'm cloud software engineer"
-  bio = "A little bit about you"
+  headline = "I'm Cloud Software Engineer"
+  bio = "Trying to make this world better"
   links = [
      { email = "mailto:alekskharkevich96@gmail.com" },
   #   { link = "https://link-to-some-website.com/" },
