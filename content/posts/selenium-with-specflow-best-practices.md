@@ -8,7 +8,7 @@ showHeadingAnchors : true
 showTaxonomies : true
 showEdit: false 
 sharingLinks: false
-showLikes: true
+showLikes: false
 ---
 
 If you want to cover your application with stable, fast, effective and easy to maintain automated tests, you should follow few simple rules, that will make your life easier.
@@ -26,7 +26,7 @@ Using of relative path in XPath locator will solve this problem, however, it wil
 driver.findElement(By.xpath("/html/body/div[7]/div[3]) :x:
 ```
 
-As you can see, this locator is also really hard to read and maintain in the future.
+Such locators are also hard to read and maintain.
 
 What locators **should** be used in this case?
 
@@ -45,33 +45,33 @@ driver.findElement(By.CssSelector("[data-qa='object-id']") :white_check_mark:
 ```
 As you may have noticed, I've used `data-qa` attribute selector. Using of such attributes is a great approach. You will not depend on any ids or classes, that can be change during development, you will define your own attributes just for your locators.
 
-Even if you need to find the element by some text, you can avoid the use of XPath using nested locators.
+Even if you need to find the element by some text, you can avoid the use of XPath with nested locators.
 ```
 drive.FindElements(By.TagName("a")).First(e => e.Text == "Car") :white_check_mark:
 ```
 
-P.S. Feel free to use remaining locators like `By.TagName` or `By.Name`, but be careful, you can have more than one element with the specified name on the page.
+P.S. Feel free to use remaining locators like `By.TagName` or `By.Name`, but be careful, you can have more than one DOM element with the specified name on the page.
 
 **Conclusion**: try to avoid the use of XPath as long as possible :smile:
 
 ### Waits
 Do **NOT** use Thread.Sleep
 
-You've made a click on the button and need to wait for some element to appear before content verification. How to deal with it?
+You've made a click on the button and waiting for some element to appear before content verification. How to deal with it?
 
 The simplest solution you can think of, is to use `Thread.Sleep`, but this idea is not as good as you might think.
 
-You can call `Thread.Sleep` for 10 secs, but what happens when your element just take 2-3 secs to load? Right, you will wait for remaining 7-8 secs to continue tests execution. So, `Thread.Sleep` will lead you to increased test execution time in cases, where elements are loaded earlier than we expected. Also in general using of `Thread.Sleep` is considered to be a bad practice.
+For example, you are calling `Thread.Sleep` for 10 seconds, but what happens when your element only takes 2-3 seconds to load? Right, you are waiting for remaining 7-8 seconds to continue tests execution. So, `Thread.Sleep` will lead you to increased tests execution time in cases, where elements are loaded earlier than we expect. Also, in general, the use of `Thread.Sleep` is considered to be a bad practice.
 
 What can be used instead of `Thread.Sleep`?
 
-Selenium provide us with powerful **Wait** mechanisms, that make our code more flexible. There are several types of them.
+Selenium provides us with powerful **Wait** mechanisms, that make our code more flexible. There are several types of them.
 
 #### Implicit Wait
 
-Unlike `Thread.Sleep`, implicit wait doesn't wait for complete time duration. If an element is found before specified wait duration, it will continue execution of your next line of code immediately.
+Unlike `Thread.Sleep`, implicit wait doesn't wait for complete time duration. If an element is found before specified wait duration, it will continue execution of your next line of the code immediately.
 
-Implicit wait is useful, when you need to apply wait mechanism once for all elements, specified in your test script.
+Implicit wait is useful, when you need to apply wait mechanism once for all elements specified in your test script.
 
 ```
 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
@@ -81,7 +81,7 @@ driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
 #### Explicit Wait
 
-Explicit wait is waiting for some condition to occur. Unlike implicit wait that is used for all elements in the test script, explicit wait works only on the particular DOM element.
+Explicit wait is waiting for some condition to occur. Unlike implicit wait that is used for all elements in the test script, explicit wait works only on the particular element.
 
 ```
 var wait = new WebDriverWait(driver, timeout: TimeSpan.FromSeconds(10));
@@ -103,7 +103,7 @@ var wait = new WebDriverWait(driver, timeout: TimeSpan.FromSeconds(10))
 wait.IgnoreExceptionTypes(typeof(ElementClickInterceptedException));
 wait.Until(driver => driver.FindElement(By.Id("loginButton")))
 ```
-As you can see, all types of waits are similar to each other. If you need to wait for particular element to appear, feel free to use explicit or fluent wait. If you need to wait for all elements on the page, you can use implicit wait.
+As you can see, all types of waits are similar to each other. If you need to wait for particular DOM element to appear, feel free to use explicit or fluent wait. If you need to wait for all elements on the page, you can use implicit wait.
 
 **Important:** Do not use different types of waits at the same time. It will lead you to unpredictable wait times.
 
@@ -131,7 +131,7 @@ Such approach is very useful in case when you need to login under different user
 
 #### Test failures management
 
-When you have a lot of E2E tests, it's not uncommon for some test to fail on the one of your environments. Having logs will make it easier to find the issue, but what if you will have few screenshots of your browser right in the moment of the failure? Yeah, these pictures will be your real salvation, especially if your page has a lot of dynamically loaded elements.
+When you have a lot of E2E tests, it's not uncommon for some test to fail on the one of your environments. Having logs will make it easier to find the issue, but what if you will have few screenshots of your browser right in the moment of the failure? Yeah, these pictures will be your real salvation, especially if your page has lots of dynamically loaded elements.
 
 Selenium provides us with mechanism of making page screenshots. Combination of this mechanism with Specflow hook will make your logging much more useful.
 
