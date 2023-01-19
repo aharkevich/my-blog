@@ -28,18 +28,18 @@ driver.findElement(By.xpath("/html/body/div[7]/div[3]) :x:
 
 Such locators are also hard to read and maintain.
 
-What locators **should** be used in this case?
+What locators **should** be used instead?
 
 The good practice is to use the following locators: 
-1. By html element identifier
+1. Html element identifier
 ```
 driver.findElement(By.Id("loginForm")) :white_check_mark:
 ```
-2. By CSS class
+2. CSS class
 ```
 driver.findElement(By.ClassName("myTable")) :white_check_mark:
 ```
-3. By CSS selector
+3. CSS selector
 ```
 driver.findElement(By.CssSelector("[data-qa='object-id']") :white_check_mark:
 ```
