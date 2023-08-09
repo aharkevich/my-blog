@@ -33,15 +33,15 @@ What locators **should** be used instead?
 The good practice is to use the following locators: 
 1. Html element identifier
 ```
-driver.findElement(By.Id("loginForm")) :white_check_mark:
+driver.FindElement(By.Id("loginForm")) :white_check_mark:
 ```
 2. CSS class
 ```
-driver.findElement(By.ClassName("myTable")) :white_check_mark:
+driver.FindElement(By.ClassName("myTable")) :white_check_mark:
 ```
 3. CSS selector
 ```
-driver.findElement(By.CssSelector("[data-qa='object-id']") :white_check_mark:
+driver.FindElement(By.CssSelector("[data-qa='object-id']") :white_check_mark:
 ```
 As you may have noticed, I've used `data-qa` attribute selector. Using of such attributes is a great approach. You will not depend on any ids or classes, that can be change during development, you will define your own attributes just for your locators.
 
@@ -117,12 +117,13 @@ In this section I will talk about few most useful hooks.
 
 **DO** finish your browser session after each test run.
 
-This simple hook will help you to keep your client storage clean before each test run.
+This simple hook will help you to close the browser and quit the session to keep your client storage clean before each test run.
 
 ```
 [AfterScenario]
 internal static void FinishBrowserSession(IWebDriver driver)
 {
+    driver.Close();
     driver.Quit();
 }
 ```
